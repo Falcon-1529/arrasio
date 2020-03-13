@@ -1,183 +1,222 @@
-<!doctype html>
-<html lang="en" id="mainBody"><link href="https://fonts.googleapis.com/css?family=Ubuntu:400,700" rel="stylesheet"> 
-
-<style type="text/css">
-    body {
-        overflow:hidden;
-    }
-</style>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <!-- Meta Properties -->
-    <meta charset="UTF-8">
-    <title>arras.io beta</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
-    <!-- CSS -->
-    <link rel="stylesheet" href="css/main.css" />
-    <!-- Version Control -->
-    <script>
-        var VERSION = localStorage.getItem('versionHash');
-        (function versionControl() {
-            let request = new XMLHttpRequest();
-            let url = window.location.href + "/api/vhash";
-            console.log("Checking version...");
-            return new Promise((resolve, reject) => {
-                request.open('GET', url);
-                request.onload = () => { resolve(request.response); console.log('Version check successful.'); };
-                request.onerror = () => { reject(request.statusText); console.log('Version check failed.'); console.log(request.statusText); };
-                request.send();
-            });
-        })().then(function resolveVersion(data) {
-            localStorage.setItem('versionHash', data);
-            if (VERSION !== data) {
-                console.log("Updating!");   
-                localStorage.setItem('updated', 'datgudshit');
-                location.reload(true);
-            }
-        });
-    </script>
-    <!-- Favicons -->
-    <link rel="apple-touch-icon" sizes="57x57" href="/favicons/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="/favicons/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="/favicons/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="/favicons/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="/favicons/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="/favicons/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="/favicons/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="/favicons/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192"  href="/favicons/android-icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="/favicons/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
-    <link rel="manifest" href="/favicons/manifest.json">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="/favicons/ms-icon-144x144.png">
-    <meta name="theme-color" content="#ffffff">
+  <!-- Meta Properties -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="Falcon 1529's Arras!">
+  <meta name="robots" content="index, follow">
+  <meta property="og:image" content="https://cdn.glitch.com/887c44bf-da02-4428-88cf-c3dc76107561%2Fthumbnails%2F48ea371f-a699-4183-a9ae-0391da3e619c.image.png?1576266489801">
+  <meta property="og:image:width" content="54">
+  <meta property="og:image:height" content="54">
+  <title>Falcon Arras</title>
+  <!-- JS -->
+ <!-- <script async defer src="https://www.googletagmanager.com/gtag/js?id=UA-120544149-1"></script>
+  <script async src="//api.adinplay.com/libs/aiptag/pub/ACX/arras.io/tag.min.js"></script> -->
+  <!-- CSS -->
+  <link href="https://fonts.googleapis.com/css?family=Ubuntu:400,700" rel="stylesheet">
+  <link rel="stylesheet" href="/main.css">
+  <script>
+  var aiptag = aiptag || {};
+  aiptag.cmd = aiptag.cmd || [];
+  aiptag.cmd.display = aiptag.cmd.display || [];  aiptag.cmd.player = aiptag.cmd.player || [];
+  aiptag.gdprShowConsentTool = true;
+  </script>
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" sizes="256x256" href="https://media.discordapp.net/attachments/645990609424744451/671643942957219850/unknown.png?width=270&height=270">
+  <meta name="theme-color" content="#8abc3f">
 </head>
-<body oncontextmenu="return false;" id="mainBody">
-    <div id="gameAreaWrapper">
-        <canvas id="gameCanvas" tabindex="1" id="cvs" tabindex="1"></canvas>
-    </div>
-    <div id="mainWrapper">
-        <div id="startMenuWrapper">
-            <div id="startMenu">
-                <div id="twitterHolder" class="startMenuHolder">
-                    <a class="twitter-timeline" data-width="350" data-height="335" data-theme="light" data-link-color="#B9E87E" href="https://twitter.com/arras_dev?ref_src=twsrc%5Etfw">Tweets by arras_dev</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-                </div>
-                <div class="startMenuHolder">
-                    <div class="sliderHolder">
-                        <div class="slider" id="startMenuSlidingContent">
-                            <center><img src="/favicons/favicon-96x96.png" /></center>
-                            <h1>arras.io beta</h1>
-                            <div id="serverName"><h4 class="nopadding">Connecting...</h4></div>
-                            <input type="text" autofocus tabindex="1" spellcheck="false" placeholder="This is the tale of:" id="playerNameInput" maxlength="24" />
-                            <input type="text" class="conceal" tabindex="3" placeholder="Token required." id="playerKeyInput" maxlength="64" />
-                        </div>
-                        <div class="slider" id="startMenuSlidingTrigger"><h3 class="nopadding">view options/help 🡲</h3></div>
-                        <div class="slider" id="startMenuSlidingContent"> 
-                            <br>
-                            <optionsHeader>Advanced Controls:</optionsHeader><br>
-                            <table>
-                                <tr>
-                                    <td><b>E</b>: auto-fire</td>
-                                    <td><b>C</b>: auto-spin</td>
-                                </tr>
-                                <tr>
-                                    <td><b>R</b>: disable auto-weapons</td>
-                                    <td><b>N</b>: level up (sandbox)</td>
-                                </tr>
-                            </table>
-                            <optionsHeader>Options:</optionsHeader>
-                            <select id="optColors" tabindex="-1">
-                                <option value="normal">Light Colors</option>
-                                <option value="dark">Dark Colors</option>
-                                <option value="natural">Natural</option>
-                                <option value="classic">Classic</option>
-                                <option value="forest">Forest (Fan-made)</option>
-                                <option value="midnight">Midnight (Fan-made)</option>
-                                <option value="pastel">Snow (Fan-made)</option>
-                                <option value="ocean">Coral Reef (Fan-made)</option>
-                                <option value="badlands">Badlands (Fan-made)</option>
-                                <option value="bleach">Bleach (Fan-made)</option>
-                            </select>
-                            <select id="optBorders" tabindex="-1">
-                                <option value="normal">Soft Borders</option>
-                                <option value="dark">Dark Borders</option>
-                                <option value="neon">Neon Mode</option>
-                                <option value="glass">Glass Mode</option>
-                            </select>
-                            <table>
-                                <tr>
-                                    <td><div>
-                                        <label><input id="optScreenshotMode" tabindex="-1" class="checkbox" type="checkbox"> Screenshot Mode</label>
-                                    </div></td>
-                                    <td><div>
-                                        <label><input id="optNoPointy" tabindex="-1" class="checkbox" type="checkbox"> Classic Traps</label>
-                                    </div></td>
-                                </tr><tr>
-                                    <td><div>
-                                        <label><input id="optFancy" tabindex="-1" class="checkbox" type="checkbox"> Low Graphics</label>
-                                    </div></td>
-                                    <td><div>
-                                        <label><input id="optPredictive" tabindex="-1" class="checkbox" type="checkbox"> Disable Hyperactivity</label>
-                                    </div></td>
-                                </tr><tr>
-                                </tr>
-                            </table>
-                        </div>    
-                    </div>
-                    <div style="position: relative; bottom: -10px;">
-                        <button id="startButton" tabindex="2">Play</button>
-                    </div>
-                </div>          
-                <div class="startMenuHolder" allowtransparency="true">
-                    <iframe id="patchNotesIFrame" src="changelog.html" seamless='seamless' frameBorder="0">Patch notes go here!</iframe>
-                </div>
-                <div id="bottomHolder">
-                    <h5 class="nopadding" style="margin:0; display:inline">Help support the dev: </h5>
-                    <form action="https://www.patreon.com/arras_dev" method="post" target="_top">
-                        <input id="pledge" type="submit" value="Patreon!">
-                    </form>       
-                    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-                        <input type="hidden" name="cmd" value="_s-xclick">
-                        <input type="hidden" name="hosted_button_id" value="YJ42X4KU6ETPA">
-                        <input id="donate" type="submit" value="Paypal!">
-                        <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-                    </form>     
-                </div>  
+
+<body oncontextmenu="return event.target.tagName === 'A'">
+  <div id="gameAreaWrapper">
+    <canvas id="gameCanvas" tabindex="1"></canvas>
+    <div id="respawn-banner" class="respawn-banner"><div id="arras-io_728x90"></div></div>
+  </div>
+  <div id="mainWrapper">
+    <div id="startMenuWrapper">
+      <div class="menuTabs">
+       
+      </div>
+      <div id="startMenu">
+        <div class="startMenuHolder">
+          <div class="sliderHolder">
+            <div class="slider startMenuSlidingContent">
+              
+              <center><img src="https://media.discordapp.net/attachments/645990609424744451/671643942957219850/unknown.png?width=130&height=130"></center>
+              <style>
+              .glow {
+  font-size: 40px;
+  color: #fff;
+  text-align: center;
+  -webkit-animation: glow 1s ease-in-out infinite alternate;
+  -moz-animation: glow 1s ease-in-out infinite alternate;
+  animation: glow 1s ease-in-out infinite alternate;
+}
+
+@-webkit-keyframes glow {
+  from {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #ff0000, 0 0 40px #ffaa00, 0 0 50px #eeff00, 0 0 60px #2bff00, 0 0 70px #0033ff;
+  }
+  
+  to {
+    text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
+  }
+}</style>
+              <style>
+                
+              </style>
+              <h1 class="glow">Falcon 1529's Arras</h1>
+              <input type="text" autofocus tabindex="1" spellcheck="false" placeholder="This is the legend of..." id="playerNameInput" maxlength="1000">
+              <input type="text" tabindex="1" placeholder="Token (leave blank if not beta-tester)" id="playerKeyInput" maxlength="48">
             </div>
+            <div class="slider" id="startMenuSlidingTrigger">
+              <h2>
+                <span id="viewOptionText">view options</span>&nbsp;&nbsp;<i class="arrow" id="optionArrow" style="transform:rotate(-45deg);-webkit-transform:rotate(-45deg)"></i>
+              </h2>
+            </div>
+            <div class="slider startMenuSlidingContent">
+              <div class="controlTable optionsHeader">Advanced Controls <i id="resetControls" class="reset resetControls" title="Reset controls"></i><i id="moreControls" class="moreControls cross" title="More controls"></i></div>
+              <table class="controlTable" id="controlTable">
+                <tbody>
+                  <tr>
+                    <td><div><b data-key="KEY_AUTO_FIRE">E</b><span> - </span>auto-fire</div></td>
+                    <td><div><b data-key="KEY_AUTO_SPIN">C</b><span> - </span>auto-spin</div></td>
+                    <td><div><b data-key="KEY_OVER_RIDE">R</b><span> - </span>disable AI</div></td>
+                  </tr>
+                  <tr>
+                    <td><div><b data-key="KEY_LEVEL_UP">N</b><span> - </span>level up</div></td>
+                    <td><div><b data-key="KEY_REVERSE_TANK">V</b><span> - </span>reverse tank</div></td>
+                    <td><div><b data-key="KEY_REVERSE_MOUSE">B</b><span> - </span>reverse mouse</div></td>
+                  </tr>
+                  <tr>
+                    <td><div><b data-key="KEY_SCREENSHOT">Q</b><span> - </span>screenshot</div></td>
+                    <td><div><b data-key="KEY_UPGRADE_MAX">M</b><span> - </span>maximize stat</div></td>
+                    <td><div><b data-key="KEY_CLASS_TREE">T</b><span> - </span>show class tree</div></td>
+                  </tr>
+                  <tr class="hidden">
+                    <td><div><b data-key="KEY_RECORD">Z</b><span> - </span>record video</div></td>
+                    <td><div><b data-key="KEY_UP">W</b><span> - </span>move up</div></td>
+                    <td><div><b data-key="KEY_PING">L</b><span> - </span>show latency</div></td>
+                  </tr>
+                  <tr class="hidden">
+                    <td><div><b data-key="KEY_LEFT">A</b><span> - </span>move left</div></td>
+                    <td><div><b data-key="KEY_DOWN">S</b><span> - </span>move down</div></td>
+                    <td><div><b data-key="KEY_RIGHT">D</b><span> - </span>move right</div></td>
+                  </tr>
+                  <tr class="hidden">
+                    <td><div><b data-key="KEY_CHOOSE_1" data-help="KEY_CHOOSE_1">Y</b><span> - </span>upgrade 1</div></td>
+                    <td><div><b data-key="KEY_CHOOSE_2" data-help="KEY_CHOOSE_2">U</b><span> - </span>upgrade 2</div></td>
+                    <td><div><b data-key="KEY_CHOOSE_3" data-help="KEY_CHOOSE_3">I</b><span> - </span>upgrade 3</div></td>
+                  </tr>
+                  <tr class="hidden">
+                    <td><div><b data-key="KEY_CHOOSE_4" data-help="KEY_CHOOSE_4">H</b><span> - </span>upgrade 4</div></td>
+                    <td><div><b data-key="KEY_CHOOSE_5" data-help="KEY_CHOOSE_5">J</b><span> - </span>upgrade 5</div></td>
+                    <td><div><b data-key="KEY_CHOOSE_6" data-help="KEY_CHOOSE_6">K</b><span> - </span>upgrade 6</div></td>
+                  </tr>
+                  <tr class="hidden">
+                    <td><div><b data-key="KEY_CHOOSE_7" data-help="KEY_CHOOSE_7"></b><span> - </span>upgrade 7</div></td>
+                    <td><div><b data-key="KEY_CHOOSE_8" data-help="KEY_CHOOSE_8"></b><span> - </span>upgrade 8</div></td>
+                    <td><div><b data-key="KEY_CHOOSE_9" data-help="KEY_CHOOSE_9"></b><span> - </span>upgrade 9</div></td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="optionsHeader">Themes & Graphics</div>
+              <select id="optColors" tabindex="-1" onchange="document.getElementById('optCustom').style.display = this.value === 'custom' ? 'block' : 'none'" onfocus="document.getElementById('optCustom').style.display = this.value === 'custom' ? 'block' : 'none'">
+                <option value="normal">Light Colors</option>
+                <option value="dark">Dark Colors</option>
+                <option value="natural">Natural</option>
+                <option value="classic">Classic</option>
+                <option value="pumpkin">Pumpkin Skeleton (Fan-made)</option>
+                <option value="forest">Forest (Fan-made)</option>
+                <option value="midnight">Midnight (Fan-made)</option>
+                <option value="pastel">Snow (Fan-made)</option>
+                <option value="ocean">Coral Reef (Fan-made)</option>
+                <option value="badlands">Badlands (Fan-made)</option>
+                <option value="bleach">Bleach (Fan-made)</option>
+                <option value="custom">Custom</option>
+              </select>
+              <select id="optMobile" tabindex="-1">
+                <option value="joysticks">Joysticks</option>
+                <option value="desktop">Desktop</option>
+              </select>
+              <select id="optBorders" tabindex="-1">
+                <option value="normal">Soft Borders</option>
+                <option value="dark">Dark Borders</option>
+                <option value="neon">Neon Mode</option>
+                <option value="glass">Glass Mode</option>
+              </select>
+              <input id="optCustom" style="display:none" placeholder="Enter your theme code here">
+              <table>
+                <tr>
+                  <td><div>
+                    <label class="container"><input id="optScreenshotMode" tabindex="-1" class="checkbox" type="checkbox"><span class="checkmark"></span>Screenshot Mode</label>
+                  </div></td>
+                  <td><div>
+                    <label class="container"><input id="optNoPointy" tabindex="-1" class="checkbox" type="checkbox"><span class="checkmark"></span>Classic Traps</label>
+                  </div></td>
+                </tr><tr>
+                  <td><div>
+                    <label class="container"><input id="optFancy" tabindex="-1" class="checkbox" type="checkbox"><span class="checkmark"></span>Low Graphics</label>
+                  </div></td>
+                  <td><div>
+                    <label class="container"><input id="optShield" tabindex="-1" class="checkbox" type="checkbox"><span class="checkmark"></span>Separate Shield Bar</label>
+                  </div></td>
+                </tr><tr>
+                  <td><div>
+                    <label class="container"><input id="optAutoLevel" tabindex="-1" class="checkbox" type="checkbox"><span class="checkmark"></span>Auto-Level Up</label>
+                  </div></td>
+                  <td><div>
+                    <label class="container"><input id="optPrediction" tabindex="-1" class="checkbox" type="checkbox"><span class="checkmark"></span>Use New Interpolation</label>
+                  </div></td>
+                </tr><tr>
+                  <td><div>
+                    <label class="container"><input id="optPointy" tabindex="-1" class="checkbox" type="checkbox"><span class="checkmark"></span>Sharp Edges</label>
+                  </div></td>
+                </tr>
+              </table>
+              <div id="bottomHolder">
+            <a style="background:	#7289da" href="https://discord.gg/YZcmsFW">Discord</a>
+            <a style="background:#C98913" href="http://arras.io/#host=arras1529official.herokuapp.com">Heroku</a>
+            <a style="background:#C98913" href="(link here)">Example</a>
+            <a style="background:#C98913" href="(link here)">Example</a>
+            <a style="background:#C98913" href="(link here)">Example</a>
+            <a style="background:#C98913" href="(link here)">Example</a>
+          </div>
+            </div>
+          </div>
+          <div style="position: relative; bottom: -10px;">
+            <button id="startButton" tabindex="2">Play!</button>
+          </div>
         </div>
+        <div class="startMenuHolder shrinkable">
+          <div class="changelogSelectorContainer">
+            <div class="changelogSelector" id="changelogSelector">
+              <span data-type="changelog" title="Every single update">Changelog</span>
+            </div>
+          </div>
+          <div id="patchNotes" class="shadowScroll updates"></div>
+        </div>
+      </div>
     </div>
-    <!-- JS -->
-    <script src="//code.jquery.com/jquery-2.2.0.min.js"></script>
-    <script src="js/app.js"></script>
-    <script>
-        var clicked=true;
-        $("#startMenuSlidingTrigger").on('click', function() {
-            if(clicked) {
-                clicked=false;
-                $(this).html('<h3 class="nopadding">close options/help 🡶</h3>');
-                $(".slider").css({"top": "-265px"})
-            } else {
-                clicked=true;
-                $(this).html('<h3 class="nopadding">view options/help 🡲</h3>');
-                $(".slider").css({"top": 0});
-            }
-        });
-    </script>
-    <script>
-        $(document).ready( function() {
-            // This is because it acts weird in Chrome for whatever reason...
-            $("#twitterHolder").css({"height": "100%"});
-            // This is for updates
-            if (localStorage.getItem('updated') === 'datgudshit') {
-                localStorage.setItem('updated', false);
-                $('#patchNotesIFrame').load(function(){
-                    $("#patchNotesIFrame").contents().find('#patchNotes').prepend('<update>New update!</update> ');
-                });
-            }
-        });
-    </script>
+  </div>
+  <!-- JS -->
+  <script>
+  window.onerror = function(message, source, lineno, colno, error) {
+    window.onerror = null
+    if (error) error = error.toString()
+    console.warn('The game crashed, refreshing page to recover from error')
+    if (error == null && lineno == 0 && colno == 0) return
+    var e = JSON.stringify({
+      message: message,
+      source: source,
+      lineno: lineno,
+      colno: colno,
+      error: error
+    })
+    prompt('The game may have crashed, refresh the page to recover from error. If this is a private server, make sure to check the changelog for any server updates. Error information:', e)
+  }
+  </script>
+  <script src="./bundle.js" defer></script>
 </body>
 </html>
